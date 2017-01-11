@@ -65,7 +65,7 @@ namespace InMemoryStudentRecords
 
         private static void ReadStudentRecord(List<string> records)
         {
-            //Comment B2
+            //Comment B1 & B2
             throw new NotImplementedException();
         }
 
