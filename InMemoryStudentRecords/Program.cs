@@ -60,7 +60,12 @@ namespace InMemoryStudentRecords
         private static void CreateNewStudentRecord(List<string> records)
         {
             //Comment Edd is working on this.
-            throw new NotImplementedException();
+            Console.WriteLine("Please input the new students information using the format:");
+            Console.WriteLine("Id no., forename, surname, D.O.B., grade");
+            string recordInput = Console.ReadLine();
+            records.Add(recordInput);
+            Console.WriteLine("Thank you, input succesful");
+            Console.ReadKey();
         }
 
         private static void ReadStudentRecord(List<string> records)
