@@ -8,7 +8,7 @@ namespace InMemoryStudentRecords
     {
         static void Main()
         {
-            List<string> records = new List<string>(); 
+            List<string> records = new List<string>();
             string menuOption = "";
             while (menuOption != "0")
             {
@@ -24,7 +24,7 @@ namespace InMemoryStudentRecords
                 Console.WriteLine("0. Quit");
                 Console.WriteLine("Enter selection:");
                 menuOption = Console.ReadLine();
-                switch(menuOption)
+                switch (menuOption)
                 {
                     case "1":
                         CreateNewStudentRecord(records);
@@ -92,13 +92,23 @@ namespace InMemoryStudentRecords
             throw new NotImplementedException();
         }
 
-        static void LoadDataFile(List<string> records) {
+        static void LoadDataFile(List<string> records)
+        {
             throw new NotImplementedException();
         }
 
         static void WriteDataFile(List<string> records)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Please name the output file:");
+            string outputFileName = Console.ReadLine();
+            using (StreamWriter writer = new StreamWriter(outputFileName+".csv"))
+            {
+                for (int i = 0; i < records.Count; i++)
+                {
+                    writer.WriteLine(records[i]);
+                }
+                writer.Flush();
+            }
         }
     }
 }
