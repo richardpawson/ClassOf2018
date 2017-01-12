@@ -71,7 +71,14 @@ namespace InMemoryStudentRecords
         private static void ReadStudentRecord(List<string> records)
         {
             //Comment Max is working on this
-            throw new NotImplementedException();
+            Console.WriteLine("please select which record is required");
+            string option = Console.ReadLine();
+            int optionint = int.Parse(option);
+            Console.WriteLine(records[optionint]);
+
+
+
+
         }
 
         private static void UpdateStudentRecord(List<string> records)
