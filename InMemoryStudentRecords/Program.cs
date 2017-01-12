@@ -8,7 +8,7 @@ namespace InMemoryStudentRecords
     {
         static void Main()
         {
-            List<string> records = new List<string>(); 
+            List<string> records = new List<string>();
             string menuOption = "";
             while (menuOption != "0")
             {
@@ -24,7 +24,7 @@ namespace InMemoryStudentRecords
                 Console.WriteLine("0. Quit");
                 Console.WriteLine("Enter selection:");
                 menuOption = Console.ReadLine();
-                switch(menuOption)
+                switch (menuOption)
                 {
                     case "1":
                         CreateNewStudentRecord(records);
@@ -87,13 +87,47 @@ namespace InMemoryStudentRecords
             throw new NotImplementedException();
         }
 
-        static void LoadDataFile(List<string> records) {
-            throw new NotImplementedException();
-        }
+        static void LoadDataFile(List<string> records)
+        {
+            string input = "";
+            bool success = false;
+            do
+            {
+                try
+                {
+                    Console.WriteLine("enter the file name .csv");
+                    input = Console.ReadLine();
+                    using (StreamReader reader = new StreamReader(input))
+                    {
+                    }
+                    success = true;
+                }
 
+                catch (FileNotFoundException)
+                {
+
+                    Console.WriteLine("not a valid file name");
+                }
+            } while (success == false);
+            using (StreamReader reader = new StreamReader(input))
+            {
+                while (!reader.EndOfStream)
+                {
+                    var line = reader.ReadLine();
+                    if (line.Length > 1000000)
+                    {
+
+                        throw new Exception("greater than 10 numbers");
+                    }
+                    records.Add(line);
+                }
+            }
+            Console.WriteLine("done");
+        }
         static void WriteDataFile(List<string> records)
         {
             throw new NotImplementedException();
         }
     }
 }
+
