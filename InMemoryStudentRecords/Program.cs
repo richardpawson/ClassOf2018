@@ -93,10 +93,40 @@ namespace InMemoryStudentRecords
         }
 
         static void LoadDataFile(List<string> records)
-        {
-            throw new NotImplementedException();
-        }
+        {            string input = "";
+            bool success = false;
+            do
+            {
+                try
+                {
+                    Console.WriteLine("enter the file name .csv");
+                    input = Console.ReadLine();
+                    using (StreamReader reader = new StreamReader(input))
+                    {
+                    }
+                    success = true;
+                }
 
+                catch (FileNotFoundException)
+                {
+                    Console.WriteLine("not a valid file name");
+                }
+            } while (success == false);
+            using (StreamReader reader = new StreamReader(input))
+            {
+                while (!reader.EndOfStream)
+                {
+                    var line = reader.ReadLine();
+                    if (line.Length > 1000000)
+                    {
+
+                        throw new Exception("greater than 10 numbers");
+                    }
+                    records.Add(line);
+                }
+            }
+            Console.WriteLine("done");
+        }
         static void WriteDataFile(List<string> records)
         {
             Console.WriteLine("Please name the output file:");
@@ -112,3 +142,4 @@ namespace InMemoryStudentRecords
         }
     }
 }
+
