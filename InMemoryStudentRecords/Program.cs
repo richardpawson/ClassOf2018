@@ -17,7 +17,7 @@ namespace InMemoryStudentRecords
                 Console.WriteLine("2. Read student record");
                 Console.WriteLine("3. Update student record");
                 Console.WriteLine("4. Delete student record");
-                Console.WriteLine("5. List All Students");
+                Console.WriteLine("5. Find student records");
                 Console.WriteLine("6. Load Data File");
                 Console.WriteLine("7. Back-up Data File");
                 Console.WriteLine("8. Write Data File");
@@ -39,7 +39,7 @@ namespace InMemoryStudentRecords
                         DeleteStudentRecord(records);
                         break;
                     case "5":
-                        ListAllStudents(records);
+                        FindStudents(records);
                         break;
                     case "6":
                         LoadDataFile(records);
@@ -75,17 +75,10 @@ namespace InMemoryStudentRecords
             string option = Console.ReadLine();
             int optionint = int.Parse(option);
             Console.WriteLine(records[optionint]);
-
-
-
-
         }
 
         private static void UpdateStudentRecord(List<string> records)
         {
-
-            //Comment freddie is working on this
-
             throw new NotImplementedException();
         }
 
@@ -94,9 +87,47 @@ namespace InMemoryStudentRecords
             throw new NotImplementedException();
         }
 
-        static void ListAllStudents(List<string> records)
+        static void FindStudents(List<string> records)
         {
-            throw new NotImplementedException();
+            string menuOption = "";
+            while (menuOption != "0")
+            {
+                Console.WriteLine("Find Students Menu");
+                Console.WriteLine("1. Find by match");
+                Console.WriteLine("2. Find by Id");
+                Console.WriteLine("3. Find by first name");
+                Console.WriteLine("4. Find by last name");
+                Console.WriteLine("5. Find by Grade");
+                Console.WriteLine("6. Find by Date Of Birth");
+                Console.WriteLine("0. Back to Main Menu");
+                Console.WriteLine("Enter selection:");
+                menuOption = Console.ReadLine();
+                switch (menuOption)
+                {
+                    case "1":
+                        FindByMatch(records);
+                        break;
+                    case "2":
+                        FindById(records);
+                        break;
+                    case "3":
+                        FindByFirstName(records);
+                        break;
+                    case "4":
+                        FindByLastName(records);
+                        break;
+                    case "5":
+                        FindByGrade(records);
+                        break;
+                    case "6":
+                        FindByDateOfBirth(records);
+                        break;
+                    case "0":
+                        return; //To Main method & hence main menu
+                    default:
+                        break;
+                }
+            }
         }
 
         static void LoadDataFile(List<string> records)
@@ -147,6 +178,38 @@ namespace InMemoryStudentRecords
                 writer.Flush();
             }
         }
+
+        #region Find sub-menu actions
+        private static void FindByMatch(List<string> records)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void FindById(List<string> records)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void FindByFirstName(List<string> records)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void FindByLastName(List<string> records)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void FindByGrade(List<string> records)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void FindByDateOfBirth(List<string> records)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
     }
 }
 
