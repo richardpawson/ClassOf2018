@@ -202,7 +202,9 @@ namespace InMemoryStudentRecords
 
         private static void FindByLastName(List<string> records)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("please enter their surname");
+            string option = Console.ReadLine();
+            Console.WriteLine(records.First(r => r.Split(',')[2].Trim ()== option));
         }
 
         private static void FindByGrade(List<string> records)
