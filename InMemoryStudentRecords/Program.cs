@@ -213,8 +213,13 @@ namespace InMemoryStudentRecords
         private static void FindByLastName(List<string> records)
         {
             Console.WriteLine("please enter their surname");
-            string option = Console.ReadLine();
-            Console.WriteLine(records.First(r => r.Split(',')[2].Trim ()== option));
+            string option = Console.ReadLine();            
+          var results = records.Where(r => r.Split(',')[2].Trim().Contains(option));
+            foreach ( var sr in results)
+            {
+                Console.WriteLine(sr);
+            }
+            
         }
 
         private static void FindByGrade(List<string> records)
