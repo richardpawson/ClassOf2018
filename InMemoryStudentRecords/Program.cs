@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace InMemoryStudentRecords
 {
@@ -70,11 +71,11 @@ namespace InMemoryStudentRecords
 
         private static void ReadStudentRecord(List<string> records)
         {
-            //Comment Max is working on this
+            //Comment Edd is working on this
             Console.WriteLine("please select which record is required");
             string option = Console.ReadLine();
-            int optionint = int.Parse(option);
-            Console.WriteLine(records[optionint]);
+            //LINQ
+            Console.WriteLine(records.First(r => r.Split(',')[0] == option));
         }
 
         private static void UpdateStudentRecord(List<string> records)
@@ -187,7 +188,9 @@ namespace InMemoryStudentRecords
 
         private static void FindById(List<string> records)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Please Enter ID:");
+            string option = Console.ReadLine();         
+            Console.WriteLine(records.First(r => r.Split(',')[0] == option));
         }
 
         private static void FindByFirstName(List<string> records)
