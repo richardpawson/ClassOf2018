@@ -161,7 +161,11 @@ namespace InMemoryStudentRecords
 
                         throw new Exception("greater than 10 numbers");
                     }
-                    records.Add(line);
+                    if (line != "")
+                    {
+                        records.Add(line);
+                    }
+                  
                 }
             }
             Console.WriteLine("done");
@@ -209,11 +213,16 @@ namespace InMemoryStudentRecords
 
         private static void FindByGrade(List<string> records)
         {
-            //Comment Edd is working on this
+    
             Console.WriteLine("please enter which grade is required");
             string grade = Console.ReadLine();
-            //LINQ
-            Console.WriteLine(records.First(r => r.Split(',')[4].Trim() == grade));
+           
+            var results = (records.Where(r => r.Split(',')[4].Trim() == grade));
+            foreach (var result in results)
+            {
+                Console.WriteLine(result);
+            }
+
 
 
         }
