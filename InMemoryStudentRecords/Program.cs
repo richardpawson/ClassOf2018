@@ -201,7 +201,13 @@ namespace InMemoryStudentRecords
         {
             Console.WriteLine("Please enter first name:");
             string option = Console.ReadLine();
-            Console.WriteLine(records.First(r => r.Split(',')[1].Trim() == option));
+            var results = records.Where(r => r.Split(',')[1].Trim().Contains(option));
+            foreach (var sr in results)
+            {
+                Console.WriteLine(sr);
+            }
+            
+            
         }
 
         private static void FindByLastName(List<string> records)
