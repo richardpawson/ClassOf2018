@@ -205,7 +205,13 @@ namespace InMemoryStudentRecords
 
         private static void FindByGrade(List<string> records)
         {
-            throw new NotImplementedException();
+            //Comment Edd is working on this
+            Console.WriteLine("please enter which grade is required");
+            string grade = Console.ReadLine();
+            //LINQ
+            Console.WriteLine(records.First(r => r.Split(',')[4].Trim() == grade));
+
+
         }
 
         private static void FindByDateOfBirth(List<string> records)
