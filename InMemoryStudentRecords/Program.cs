@@ -195,7 +195,9 @@ namespace InMemoryStudentRecords
 
         private static void FindByFirstName(List<string> records)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Please enter first name:");
+            string option = Console.ReadLine();
+            Console.WriteLine(records.First(r => r.Split(',')[1].Trim() == option));
         }
 
         private static void FindByLastName(List<string> records)
