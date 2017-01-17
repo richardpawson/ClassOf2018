@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace InMemoryStudentRecords
 {
@@ -9,7 +10,7 @@ namespace InMemoryStudentRecords
     {
         static void Main()
         {
-            List<string> records = new List<string>();
+            List<Tuple<int, string, string, DateTime, char>> records = new List<Tuple<int, string, string, DateTime, char>>();
             string menuOption = "";
             while (menuOption != "0")
             {
@@ -58,37 +59,34 @@ namespace InMemoryStudentRecords
             }
         }
 
-        private static void CreateNewStudentRecord(List<string> records)
+        private static void CreateNewStudentRecord(List<Tuple<int, string, string, DateTime, char>> records)
         {
-            //Comment Edd is working on this.
             Console.WriteLine("Please input the new students information using the format:");
             Console.WriteLine("Id no., forename, surname, D.O.B., grade");
             string recordInput = Console.ReadLine();
-            records.Add(recordInput);
+            records.Add(ParseLine(recordInput));
             Console.WriteLine("Thank you, input succesful");
             Console.ReadKey();
         }
 
-        private static void ReadStudentRecord(List<string> records)
+        private static void ReadStudentRecord(List<Tuple<int, string, string, DateTime, char>> records)
         {
-            //Comment Edd is working on this
             Console.WriteLine("please select which record is required");
-            string option = Console.ReadLine();
-            //LINQ
-            Console.WriteLine(records.First(r => r.Split(',')[0] == option));
+            int option = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine(records.First(r => r.Item1 == option));
         }
 
-        private static void UpdateStudentRecord(List<string> records)
+        private static void UpdateStudentRecord(List<Tuple<int, string, string, DateTime, char>> records)
         {
             throw new NotImplementedException();
         }
 
-        private static void DeleteStudentRecord(List<string> records)
+        private static void DeleteStudentRecord(List<Tuple<int, string, string, DateTime, char>> records)
         {
             throw new NotImplementedException();
         }
 
-        static void FindStudents(List<string> records)
+        static void FindStudents(List<Tuple<int, string, string, DateTime, char>> records)
         {
             string menuOption = "";
             while (menuOption != "0")
@@ -131,7 +129,7 @@ namespace InMemoryStudentRecords
             }
         }
 
-        static void LoadDataFile(List<string> records)
+        static void LoadDataFile(List<Tuple<int, string, string, DateTime, char>> records)
         {            string input = "";
             bool success = false;
             do
@@ -163,14 +161,14 @@ namespace InMemoryStudentRecords
                     }
                     if (line != "")
                     {
-                        records.Add(line);
+                        records.Add(ParseLine(line));
                     }
                   
                 }
             }
             Console.WriteLine("done");
         }
-        static void WriteDataFile(List<string> records)
+        static void WriteDataFile(List<Tuple<int, string, string, DateTime, char>> records)
         {
             Console.WriteLine("Please name the output file:");
             string outputFileName = Console.ReadLine();
@@ -185,23 +183,24 @@ namespace InMemoryStudentRecords
         }
 
         #region Find sub-menu actions
-        private static void FindByMatch(List<string> records)
+        private static void FindByMatch(List<Tuple<int, string, string, DateTime, char>> records)
         {
             throw new NotImplementedException();
         }
 
-        private static void FindById(List<string> records)
+        private static void FindById(List<Tuple<int, string, string, DateTime, char>> records)
         {
             Console.WriteLine("Please Enter ID:");
-            string option = Console.ReadLine();         
-            Console.WriteLine(records.First(r => r.Split(',')[0] == option));
+            int option = Convert.ToInt32(Console.ReadLine());         
+            var record = records.First(r => r.Item1 == option);
+            Console.WriteLine(AsCommaSeparatedString(record));
         }
 
-        private static void FindByFirstName(List<string> records)
+        private static void FindByFirstName(List<Tuple<int, string, string, DateTime, char>> records)
         {
             Console.WriteLine("Please enter first name:");
             string option = Console.ReadLine();
-            var results = records.Where(r => r.Split(',')[1].Trim().Contains(option));
+            var results = records.Where(r => r.Item2.Contains(option));
             foreach (var sr in results)
             {
                 Console.WriteLine(sr);
@@ -210,11 +209,11 @@ namespace InMemoryStudentRecords
             
         }
 
-        private static void FindByLastName(List<string> records)
+        private static void FindByLastName(List<Tuple<int, string, string, DateTime, char>> records)
         {
             Console.WriteLine("please enter their surname");
             string option = Console.ReadLine();            
-          var results = records.Where(r => r.Split(',')[2].Trim().Contains(option));
+          var results = records.Where(r => r.Item3.Trim().Contains(option));
             foreach ( var sr in results)
             {
                 Console.WriteLine(sr);
@@ -222,13 +221,13 @@ namespace InMemoryStudentRecords
             
         }
 
-        private static void FindByGrade(List<string> records)
+        private static void FindByGrade(List<Tuple<int, string, string, DateTime, char>> records)
         {
     
             Console.WriteLine("please enter which grade is required");
-            string grade = Console.ReadLine();
+            char grade = Console.ReadLine().ToCharArray()[0];
            
-            var results = (records.Where(r => r.Split(',')[4].Trim() == grade));
+            var results = (records.Where(r => r.Item5 == grade));
             foreach (var result in results)
             {
                 Console.WriteLine(result);
@@ -238,9 +237,33 @@ namespace InMemoryStudentRecords
 
         }
 
-        private static void FindByDateOfBirth(List<string> records)
+        private static void FindByDateOfBirth(List<Tuple<int, string, string, DateTime, char>> records)
         {
             throw new NotImplementedException();
+        }
+        #endregion
+
+        #region Helpers 
+        private static Tuple<int, string, string, DateTime, char> ParseLine(string line)
+        {
+            var fields = line.Split(',');
+            int id = Convert.ToInt32(fields[0]);
+            string firstName = fields[1].Trim();
+            string lastName = fields[2].Trim();
+            DateTime dob = Convert.ToDateTime(fields[3]);
+            char grade = fields[4].Trim().ToCharArray()[0];
+            return Tuple.Create(id, firstName, lastName, dob, grade);
+        }
+
+        private static string AsCommaSeparatedString(Tuple<int, string, string, DateTime, char> record)
+        {
+            var sb = new StringBuilder();
+            sb.Append(record.Item1).Append(", ");
+            sb.Append(record.Item2).Append(", ");
+            sb.Append(record.Item3).Append(", ");
+            sb.Append(record.Item4.ToShortDateString()).Append(", ");
+            sb.Append(record.Item5);
+            return sb.ToString();
         }
         #endregion
     }
