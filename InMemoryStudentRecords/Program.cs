@@ -64,7 +64,7 @@ namespace InMemoryStudentRecords
             Console.WriteLine("Please input the new students information using the format:");
             Console.WriteLine("Id no., forename, surname, D.O.B., grade");
             string recordInput = Console.ReadLine();
-            records.Add(ParseLine(recordInput));
+            records.Add(StringToTuple(recordInput));
             Console.WriteLine("Thank you, input succesful");
             Console.ReadKey();
         }
@@ -73,7 +73,8 @@ namespace InMemoryStudentRecords
         {
             Console.WriteLine("please select which record is required");
             int option = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine(records.First(r => r.Item1 == option));
+            var record = records.First(r => r.Item1 == option);
+            Console.WriteLine(TupleToString(record));
         }
 
         private static void UpdateStudentRecord(List<Tuple<int, string, string, DateTime, char>> records)
@@ -161,7 +162,7 @@ namespace InMemoryStudentRecords
                     }
                     if (line != "")
                     {
-                        records.Add(ParseLine(line));
+                        records.Add(StringToTuple(line));
                     }
                   
                 }
@@ -193,7 +194,7 @@ namespace InMemoryStudentRecords
             Console.WriteLine("Please Enter ID:");
             int option = Convert.ToInt32(Console.ReadLine());         
             var record = records.First(r => r.Item1 == option);
-            Console.WriteLine(AsCommaSeparatedString(record));
+            Console.WriteLine(TupleToString(record));
         }
 
         private static void FindByFirstName(List<Tuple<int, string, string, DateTime, char>> records)
@@ -203,7 +204,7 @@ namespace InMemoryStudentRecords
             var results = records.Where(r => r.Item2.Contains(option));
             foreach (var sr in results)
             {
-                Console.WriteLine(sr);
+                Console.WriteLine(TupleToString(sr));
             }
             
             
@@ -216,7 +217,7 @@ namespace InMemoryStudentRecords
           var results = records.Where(r => r.Item3.Trim().Contains(option));
             foreach ( var sr in results)
             {
-                Console.WriteLine(sr);
+                Console.WriteLine(TupleToString(sr));
             }
             
         }
@@ -230,7 +231,7 @@ namespace InMemoryStudentRecords
             var results = (records.Where(r => r.Item5 == grade));
             foreach (var result in results)
             {
-                Console.WriteLine(result);
+                Console.WriteLine(TupleToString(result));
             }
 
 
@@ -244,8 +245,14 @@ namespace InMemoryStudentRecords
         #endregion
 
         #region Helpers 
-        private static Tuple<int, string, string, DateTime, char> ParseLine(string line)
+        private static Tuple<int, string, string, DateTime, char> StringToTuple(string line)
         {
+            Tuple<int, string, string, DateTime, char> myTuple 
+                = Tuple.Create(37, "George", "Google", new DateTime(2001, 10, 31), 'C');
+            //A Tuple's item numbers start from 1, not 0!
+            if (myTuple.Item4.Year > 1999) { }
+
+
             var fields = line.Split(',');
             int id = Convert.ToInt32(fields[0]);
             string firstName = fields[1].Trim();
@@ -255,7 +262,7 @@ namespace InMemoryStudentRecords
             return Tuple.Create(id, firstName, lastName, dob, grade);
         }
 
-        private static string AsCommaSeparatedString(Tuple<int, string, string, DateTime, char> record)
+        private static string TupleToString(Tuple<int, string, string, DateTime, char> record)
         {
             var sb = new StringBuilder();
             sb.Append(record.Item1).Append(", ");
