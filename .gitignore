@@ -1,7 +1,7 @@
-﻿################################################################################
+################################################################################
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/InMemoryStudentRecords/bin/Debug
-/InMemoryStudentRecords/obj/Debug
-InMemoryStudentRecords/.vs/InMemoryStudentRecords/v14/.suo
+*/bin
+*/obj
+*.suo
