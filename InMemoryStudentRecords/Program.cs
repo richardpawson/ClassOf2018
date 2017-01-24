@@ -12,6 +12,10 @@ namespace InMemoryStudentRecords
         {
             List<Tuple<int, string, string, DateTime, char>> records = new List<Tuple<int, string, string, DateTime, char>>();
             string menuOption = "";
+            string input = "studentrecords.csv";
+            inputname(records, input);
+            string outputFileName = "StudentRecord – Backup.csv";
+            outputfile(records, outputFileName);
             while (menuOption != "0")
             {
                 Console.WriteLine("Main Menu");
@@ -131,7 +135,8 @@ namespace InMemoryStudentRecords
         }
 
         static void LoadDataFile(List<Tuple<int, string, string, DateTime, char>> records)
-        {            string input = "";
+        {
+            string input = "";
             bool success = false;
             do
             {
@@ -139,7 +144,7 @@ namespace InMemoryStudentRecords
                 {
                     Console.WriteLine("enter the file name .csv");
                     input = Console.ReadLine();
-                    using (StreamReader reader = new StreamReader(input))
+                    using (StreamReader reader = new StreamReader( "StudentRecords.csv"))
                     {
                     }
                     success = true;
@@ -150,7 +155,13 @@ namespace InMemoryStudentRecords
                     Console.WriteLine("not a valid file name");
                 }
             } while (success == false);
-            using (StreamReader reader = new StreamReader(input))
+            inputname(records, input);
+            Console.WriteLine("done");
+        }
+
+        private static void inputname(List<Tuple<int, string, string, DateTime, char>> records, string fileName)
+        {
+            using (StreamReader reader = new StreamReader(fileName))
             {
                 while (!reader.EndOfStream)
                 {
@@ -164,16 +175,21 @@ namespace InMemoryStudentRecords
                     {
                         records.Add(StringToTuple(line));
                     }
-                  
+
                 }
             }
-            Console.WriteLine("done");
         }
+
         static void WriteDataFile(List<Tuple<int, string, string, DateTime, char>> records)
         {
             Console.WriteLine("Please name the output file:");
             string outputFileName = Console.ReadLine();
-            using (StreamWriter writer = new StreamWriter(outputFileName+".csv"))
+            outputfile(records, outputFileName);
+        }
+
+        private static void outputfile(List<Tuple<int, string, string, DateTime, char>> records, string outputFileName)
+        {
+            using (StreamWriter writer = new StreamWriter(outputFileName + ".csv"))
             {
                 for (int i = 0; i < records.Count; i++)
                 {
@@ -203,11 +219,9 @@ namespace InMemoryStudentRecords
             string option = Console.ReadLine();
             var results = records.Where(r => r.Item2.Contains(option));
             foreach (var sr in results)
-            {
-                Console.WriteLine(TupleToString(sr));
-            }
-            
-            
+                outputresults(results);
+
+
         }
 
         private static void FindByLastName(List<Tuple<int, string, string, DateTime, char>> records)
@@ -215,27 +229,27 @@ namespace InMemoryStudentRecords
             Console.WriteLine("please enter their surname");
             string option = Console.ReadLine();            
           var results = records.Where(r => r.Item3.Trim().Contains(option));
-            foreach ( var sr in results)
-            {
-                Console.WriteLine(TupleToString(sr));
-            }
-            
+            outputresults(results);
+
         }
 
         private static void FindByGrade(List<Tuple<int, string, string, DateTime, char>> records)
         {
-    
+
             Console.WriteLine("please enter which grade is required");
             char grade = Console.ReadLine().ToCharArray()[0];
-           
+
             var results = (records.Where(r => r.Item5 == grade));
-            foreach (var result in results)
+            outputresults(results);
+
+        }
+
+        private static void outputresults(IEnumerable<Tuple<int, string, string, DateTime, char>> results)
+        {
+            foreach (var sr in results)
             {
-                Console.WriteLine(TupleToString(result));
+                Console.WriteLine(TupleToString(sr));
             }
-
-
-
         }
 
         private static void FindByDateOfBirth(List<Tuple<int, string, string, DateTime, char>> records)
