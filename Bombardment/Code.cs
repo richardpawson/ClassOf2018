@@ -131,23 +131,11 @@ class Program
     {
       if (Orientation == 'v')
       {
-        for (int Scan = 0; Scan < Ship.Size; Scan++)
-        {
-          if (Board[Row + Scan, Column] != '-')
-          {
-            return false;
-          }
-        }
+          return WillItFitVert(Board, Ship, Row, Column);
       }
       else if (Orientation == 'h')
       {
-        for (int Scan = 0; Scan < Ship.Size; Scan++)
-        {
-          if (Board[Row, Column + Scan] != '-')
-          {
-            return false;
-          }
-        }
+          return WillItFitHoro(Board, Ship, Row, Column);
       }
     }
     return true;
@@ -254,7 +242,31 @@ class Program
     Ships[4].Size = 2;
   }
 
-  static void Main(string[] args)
+  private static bool WillItFitVert(char[,] Board, ShipType Ship, int Row, int Column)
+    {
+        for (int Scan = 0; Scan < Ship.Size; Scan++)
+        {
+            if (Board[Row + Scan, Column] != '-')
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+  private static bool WillItFitHoro(char[,] Board, ShipType Ship, int Row, int Column)
+    {
+        for (int Scan = 0; Scan < Ship.Size; Scan++)
+        {
+            if (Board[Row, Column + Scan] != '-')
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    static void Main(string[] args)
   {
     ShipType[] Ships = new ShipType[5];
     char[,] Board = new char[10, 10];
