@@ -8,11 +8,22 @@ class Program
     public string Name;
     public int Size;
   }
-
+    const int GridSize = 12;
   const string TrainingGame = "Training.txt";
+    private const char Miss = 'm';
+    private const char Horizontal = 'h';
+    private const char Hit = 'h';
+    private const char Empty = '-';
+    private const char Vertical = 'v';
+    private const char AircraftCarrier = 'A';
+    private const char BattleShip = 'B';
+    private const char Submarine = 'S';
+    private const char Destroyer = 'D';
+    private const char PatrolBoat = 'P';
 
   private static void GetRowColumn(ref int Row, ref int Column)
   {
+    
     Console.WriteLine();
     Console.Write("Please enter column: ");
     Column = Convert.ToInt32(Console.ReadLine());
@@ -26,29 +37,29 @@ class Program
     int Row = 0;
     int Column = 0;
     GetRowColumn(ref Row, ref Column);
-    if (Board[Row, Column] == 'm' || Board[Row, Column] == 'h')
-    {
+    if (Board[Row, Column] == Miss || Board[Row, Column] == Hit)
+        { 
       Console.WriteLine("Sorry, you have already shot at the square (" + Column + "," + Row + "). Please try again.");
     }
-    else if (Board[Row, Column] == '-')
+    else if (Board[Row, Column] == Empty)
     {
       Console.WriteLine("Sorry, (" + Column + "," + Row + ") is a miss.");
-      Board[Row, Column] = 'm';
+      Board[Row, Column] = Miss;
     }
     else
     {
       Console.WriteLine("Hit at (" + Column + "," + Row + ").");
-      Board[Row, Column] = 'h';
+      Board[Row, Column] = Hit;
     }
   }
 
   private static void SetUpBoard(ref char[,] Board)
   {
-    for (int Row = 0; Row < 10; Row++)
+    for (int Row = 0; Row < GridSize; Row++)
     {
-      for (int Column = 0; Column < 10; Column++)
+      for (int Column = 0; Column < GridSize; Column++)
       {
-        Board[Row, Column] = '-';
+        Board[Row, Column] = Empty;
       }
     }
   }
@@ -57,10 +68,10 @@ class Program
   {
     string Line = "";
     StreamReader BoardFile = new StreamReader(TrainingGame);
-    for (int Row = 0; Row < 10; Row++)
+    for (int Row = 0; Row < GridSize; Row++)
     {
                 Line = BoardFile.ReadLine();
-                for (int Column = 0; Column < 10; Column++)
+                for (int Column = 0; Column < GridSize; Column++)
                 {
                     Board[Row, Column] = Line[Column];
                 }
@@ -81,16 +92,16 @@ class Program
       Valid = false;
       while (Valid == false)
       {
-        Row = RandomNumber.Next(0, 10);
-        Column = RandomNumber.Next(0, 10);
+        Row = RandomNumber.Next(0, GridSize);
+        Column = RandomNumber.Next(0, GridSize);
         HorV = RandomNumber.Next(0, 2);
         if (HorV == 0)
         {
-          Orientation = 'v';
+          Orientation = Vertical;
         }
         else
         {
-          Orientation = 'h';
+          Orientation = Horizontal;
         }
         Valid = ValidateBoatPosition(Board, Ship, Row, Column, Orientation);
       }
@@ -101,14 +112,14 @@ class Program
 
   private static void PlaceShip(ref char[,] Board, ShipType Ship, int Row, int Column, char Orientation)
   {
-    if (Orientation == 'v')
+    if (Orientation == Vertical)
     {
       for (int Scan = 0; Scan < Ship.Size; Scan++)
       {
         Board[Row + Scan, Column] = Ship.Name[0];
       }
     }
-    else if (Orientation == 'h')
+    else if (Orientation == Horizontal)
     {
       for (int Scan = 0; Scan < Ship.Size; Scan++)
       {
@@ -119,21 +130,21 @@ class Program
 
   private static bool ValidateBoatPosition(char[,] Board, ShipType Ship, int Row, int Column, char Orientation)
   {
-    if (Orientation == 'v' && Row + Ship.Size > 10)
+    if (Orientation == Vertical && Row + Ship.Size > GridSize)
     {
       return false;
     }
-    else if (Orientation == 'h' && Column + Ship.Size > 10)
+    else if (Orientation == Horizontal && Column + Ship.Size > GridSize)
     {
       return false;
     }
     else
     {
-      if (Orientation == 'v')
+      if (Orientation == Vertical)
       {
           return WillItFitVert(Board, Ship, Row, Column);
       }
-      else if (Orientation == 'h')
+      else if (Orientation == Horizontal)
       {
           return WillItFitHoro(Board, Ship, Row, Column);
       }
@@ -143,11 +154,11 @@ class Program
 
   private static bool CheckWin(char[,] Board)
   {
-    for (int Row = 0; Row < 10; Row++)
+    for (int Row = 0; Row < GridSize; Row++)
     {
-      for (int Column = 0; Column < 10; Column++)
+      for (int Column = 0; Column < GridSize; Column++)
       {
-        if (Board[Row, Column] == 'A' || Board[Row, Column] == 'B' || Board[Row, Column] == 'S' || Board[Row, Column] == 'D' || Board[Row, Column] == 'P')
+        if (Board[Row, Column] == AircraftCarrier || Board[Row, Column] == BattleShip || Board[Row, Column] == Submarine || Board[Row, Column] == Destroyer || Board[Row, Column] == PatrolBoat)
         {
           return false;
         }
@@ -162,21 +173,21 @@ class Program
     Console.WriteLine("The board looks like this: ");
     Console.WriteLine();
     Console.Write(" ");
-    for (int Column = 0; Column < 10; Column++)
+    for (int Column = 0; Column < GridSize; Column++)
     {
       Console.Write(" " + Column + "  ");
     }
     Console.WriteLine();
-    for (int Row = 0; Row < 10; Row++)
+    for (int Row = 0; Row < GridSize; Row++)
     {
       Console.Write(Row + " ");
-      for (int Column = 0; Column < 10; Column++)
+      for (int Column = 0; Column < GridSize; Column++)
       {
-        if (Board[Row, Column] == '-')
+        if (Board[Row, Column] == Empty)
         {
           Console.Write(" ");
         }
-        else if (Board[Row, Column] == 'A' || Board[Row, Column] == 'B' || Board[Row, Column] == 'S' || Board[Row, Column] == 'D' || Board[Row, Column] == 'P')
+        else if (Board[Row, Column] == AircraftCarrier || Board[Row, Column] == BattleShip || Board[Row, Column] == Submarine || Board[Row, Column] == Destroyer || Board[Row, Column] == PatrolBoat)
         {
           Console.Write(" ");
         }
@@ -205,12 +216,25 @@ class Program
 
   private static int GetMainMenuChoice()
   {
-    int Choice = 0;
+        int Choice = 0;
+        try
+        {
+            
     Console.Write("Please enter your choice: ");
     Choice = Convert.ToInt32(Console.ReadLine());
     Console.WriteLine();
-    return Choice;
-  }
+            if (Choice < 3 & Choice != 9) 
+            {
+                Console.WriteLine("Invalid input, Try again");
+            }
+ 
+        }
+        catch (Exception)
+        {
+          Console.WriteLine("Invalid input, Try again");
+        }
+        return Choice;
+    }
 
   private static void PlayGame(ref char[,] Board, ref ShipType[] Ships)
   {
@@ -246,7 +270,7 @@ class Program
     {
         for (int Scan = 0; Scan < Ship.Size; Scan++)
         {
-            if (Board[Row + Scan, Column] != '-')
+            if (Board[Row + Scan, Column] != Empty)
             {
                 return false;
             }
@@ -258,7 +282,7 @@ class Program
     {
         for (int Scan = 0; Scan < Ship.Size; Scan++)
         {
-            if (Board[Row, Column + Scan] != '-')
+            if (Board[Row, Column + Scan] != Empty)
             {
                 return false;
             }
@@ -269,7 +293,7 @@ class Program
     static void Main(string[] args)
   {
     ShipType[] Ships = new ShipType[5];
-    char[,] Board = new char[10, 10];
+    char[,] Board = new char[GridSize, GridSize];
     int MenuOption = 0;
     while (MenuOption != 9)
     {
