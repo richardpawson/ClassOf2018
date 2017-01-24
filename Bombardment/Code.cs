@@ -9,7 +9,7 @@ class Program
     public int Size;
   }
     const int GridSize = 12;
-  const string TrainingGame = "Training.txt";
+    const string TrainingGame = "Training.txt";
     private const char Miss = 'm';
     private const char Horizontal = 'h';
     private const char Hit = 'h';
@@ -223,7 +223,7 @@ class Program
     Console.Write("Please enter your choice: ");
     Choice = Convert.ToInt32(Console.ReadLine());
     Console.WriteLine();
-            if (Choice < 3 & Choice != 9) 
+            if (Choice > 3 & Choice != 9) 
             {
                 Console.WriteLine("Invalid input, Try again");
             }
