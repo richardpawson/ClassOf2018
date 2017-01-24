@@ -70,20 +70,10 @@ class Program
     StreamReader BoardFile = new StreamReader(TrainingGame);
     for (int Row = 0; Row < GridSize; Row++)
     {
-            Line = BoardFile.ReadLine();
-            if (Line == null)
-            {
-                Console.WriteLine("Line Missing from Board, Load File Aborted");
-                return;
-            }
-            if (Line.Length < GridSize)
-            {
-                Console.WriteLine("Line Too Short, Load File Aborted");
-                return;
-            }
+                Line = BoardFile.ReadLine();
                 for (int Column = 0; Column < GridSize; Column++)
-                {                
-                    Board[Row, Column] = Line[Column];                 
+                {
+                    Board[Row, Column] = Line[Column];
                 }
     }
     BoardFile.Close();
