@@ -10,9 +10,20 @@ class Program
   }
 
   const string TrainingGame = "Training.txt";
+    private const char Miss = 'm';
+    private const char Horizontal = 'h';
+    private const char Hit = 'h';
+    private const char Empty = '-';
+    private const char Vertical = 'v';
+    private const char AircraftCarrier = 'A';
+    private const char BattleShip = 'B';
+    private const char Submarine = 'S';
+    private const char Destroyer = 'D';
+    private const char PatrolBoat = 'P';
 
-  private static void GetRowColumn(ref int Row, ref int Column)
+    private static void GetRowColumn(ref int Row, ref int Column)
   {
+    
     Console.WriteLine();
     Console.Write("Please enter column: ");
     Column = Convert.ToInt32(Console.ReadLine());
@@ -26,19 +37,19 @@ class Program
     int Row = 0;
     int Column = 0;
     GetRowColumn(ref Row, ref Column);
-    if (Board[Row, Column] == 'm' || Board[Row, Column] == 'h')
-    {
+    if (Board[Row, Column] == Miss || Board[Row, Column] == Hit)
+        { 
       Console.WriteLine("Sorry, you have already shot at the square (" + Column + "," + Row + "). Please try again.");
     }
-    else if (Board[Row, Column] == '-')
+    else if (Board[Row, Column] == Empty)
     {
       Console.WriteLine("Sorry, (" + Column + "," + Row + ") is a miss.");
-      Board[Row, Column] = 'm';
+      Board[Row, Column] = Miss;
     }
     else
     {
       Console.WriteLine("Hit at (" + Column + "," + Row + ").");
-      Board[Row, Column] = 'h';
+      Board[Row, Column] = Hit;
     }
   }
 
@@ -48,7 +59,7 @@ class Program
     {
       for (int Column = 0; Column < 10; Column++)
       {
-        Board[Row, Column] = '-';
+        Board[Row, Column] = Empty;
       }
     }
   }
@@ -86,11 +97,11 @@ class Program
         HorV = RandomNumber.Next(0, 2);
         if (HorV == 0)
         {
-          Orientation = 'v';
+          Orientation = Vertical;
         }
         else
         {
-          Orientation = 'h';
+          Orientation = Horizontal;
         }
         Valid = ValidateBoatPosition(Board, Ship, Row, Column, Orientation);
       }
@@ -101,14 +112,14 @@ class Program
 
   private static void PlaceShip(ref char[,] Board, ShipType Ship, int Row, int Column, char Orientation)
   {
-    if (Orientation == 'v')
+    if (Orientation == Vertical)
     {
       for (int Scan = 0; Scan < Ship.Size; Scan++)
       {
         Board[Row + Scan, Column] = Ship.Name[0];
       }
     }
-    else if (Orientation == 'h')
+    else if (Orientation == Horizontal)
     {
       for (int Scan = 0; Scan < Ship.Size; Scan++)
       {
@@ -119,31 +130,31 @@ class Program
 
   private static bool ValidateBoatPosition(char[,] Board, ShipType Ship, int Row, int Column, char Orientation)
   {
-    if (Orientation == 'v' && Row + Ship.Size > 10)
+    if (Orientation == Vertical && Row + Ship.Size > 10)
     {
       return false;
     }
-    else if (Orientation == 'h' && Column + Ship.Size > 10)
+    else if (Orientation == Horizontal && Column + Ship.Size > 10)
     {
       return false;
     }
     else
     {
-      if (Orientation == 'v')
+      if (Orientation == Vertical)
       {
         for (int Scan = 0; Scan < Ship.Size; Scan++)
         {
-          if (Board[Row + Scan, Column] != '-')
+          if (Board[Row + Scan, Column] != Empty)
           {
             return false;
           }
         }
       }
-      else if (Orientation == 'h')
+      else if (Orientation == Horizontal)
       {
         for (int Scan = 0; Scan < Ship.Size; Scan++)
         {
-          if (Board[Row, Column + Scan] != '-')
+          if (Board[Row, Column + Scan] != Empty)
           {
             return false;
           }
@@ -159,7 +170,7 @@ class Program
     {
       for (int Column = 0; Column < 10; Column++)
       {
-        if (Board[Row, Column] == 'A' || Board[Row, Column] == 'B' || Board[Row, Column] == 'S' || Board[Row, Column] == 'D' || Board[Row, Column] == 'P')
+        if (Board[Row, Column] == AircraftCarrier || Board[Row, Column] == BattleShip || Board[Row, Column] == Submarine || Board[Row, Column] == Destroyer || Board[Row, Column] == PatrolBoat)
         {
           return false;
         }
@@ -184,11 +195,11 @@ class Program
       Console.Write(Row + " ");
       for (int Column = 0; Column < 10; Column++)
       {
-        if (Board[Row, Column] == '-')
+        if (Board[Row, Column] == Empty)
         {
           Console.Write(" ");
         }
-        else if (Board[Row, Column] == 'A' || Board[Row, Column] == 'B' || Board[Row, Column] == 'S' || Board[Row, Column] == 'D' || Board[Row, Column] == 'P')
+        else if (Board[Row, Column] == AircraftCarrier || Board[Row, Column] == BattleShip || Board[Row, Column] == Submarine || Board[Row, Column] == Destroyer || Board[Row, Column] == PatrolBoat)
         {
           Console.Write(" ");
         }
