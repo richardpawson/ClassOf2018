@@ -238,7 +238,7 @@ class Program
     Console.Write("Please enter your choice: ");
     Choice = Convert.ToInt32(Console.ReadLine());
     Console.WriteLine();
-            if (Choice < 3 & Choice != 9) ;
+            if (Choice < 3 & Choice != 9) 
             {
                 Console.WriteLine("Invalid input, Try again");
             }
