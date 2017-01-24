@@ -236,12 +236,25 @@ class Program
 
   private static int GetMainMenuChoice()
   {
-    int Choice = 0;
+        int Choice = 0;
+        try
+        {
+            
     Console.Write("Please enter your choice: ");
     Choice = Convert.ToInt32(Console.ReadLine());
     Console.WriteLine();
-    return Choice;
-  }
+            if (Choice < 3 & Choice != 9) ;
+            {
+                Console.WriteLine("Invalid input, Try again");
+            }
+ 
+        }
+        catch (Exception)
+        {
+          Console.WriteLine("Invalid input, Try again");
+        }
+        return Choice;
+    }
 
   private static void PlayGame(ref char[,] Board, ref ShipType[] Ships)
   {
