@@ -130,19 +130,14 @@ class Program
 
   private static bool ValidateBoatPosition(char[,] Board, ShipType Ship, int Row, int Column, char Orientation)
   {
-<<<<<<< HEAD
-    if (Orientation == Vertical && Row + Ship.Size > 10)
+
+    if (Orientation == Vertical && Row + Ship.Size > GridSize)
     {
       return false;
     }
-    else if (Orientation == Horizontal && Column + Ship.Size > 10)
-=======
-    if (Orientation == 'v' && Row + Ship.Size > GridSize)
-    {
-      return false;
-    }
-    else if (Orientation == 'h' && Column + Ship.Size > GridSize)
->>>>>>> origin/master
+    else if (Orientation == Horizontal && Column + Ship.Size > GridSize)
+
+ 
     {
       return false;
     }
