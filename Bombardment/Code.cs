@@ -8,7 +8,7 @@ class Program
     public string Name;
     public int Size;
   }
-
+    const int GridSize = 12;
   const string TrainingGame = "Training.txt";
 
   private static void GetRowColumn(ref int Row, ref int Column)
@@ -44,9 +44,9 @@ class Program
 
   private static void SetUpBoard(ref char[,] Board)
   {
-    for (int Row = 0; Row < 10; Row++)
+    for (int Row = 0; Row < GridSize; Row++)
     {
-      for (int Column = 0; Column < 10; Column++)
+      for (int Column = 0; Column < GridSize; Column++)
       {
         Board[Row, Column] = '-';
       }
@@ -57,10 +57,10 @@ class Program
   {
     string Line = "";
     StreamReader BoardFile = new StreamReader(TrainingGame);
-    for (int Row = 0; Row < 10; Row++)
+    for (int Row = 0; Row < GridSize; Row++)
     {
                 Line = BoardFile.ReadLine();
-                for (int Column = 0; Column < 10; Column++)
+                for (int Column = 0; Column < GridSize; Column++)
                 {
                     Board[Row, Column] = Line[Column];
                 }
@@ -81,8 +81,8 @@ class Program
       Valid = false;
       while (Valid == false)
       {
-        Row = RandomNumber.Next(0, 10);
-        Column = RandomNumber.Next(0, 10);
+        Row = RandomNumber.Next(0, GridSize);
+        Column = RandomNumber.Next(0, GridSize);
         HorV = RandomNumber.Next(0, 2);
         if (HorV == 0)
         {
@@ -119,11 +119,11 @@ class Program
 
   private static bool ValidateBoatPosition(char[,] Board, ShipType Ship, int Row, int Column, char Orientation)
   {
-    if (Orientation == 'v' && Row + Ship.Size > 10)
+    if (Orientation == 'v' && Row + Ship.Size > GridSize)
     {
       return false;
     }
-    else if (Orientation == 'h' && Column + Ship.Size > 10)
+    else if (Orientation == 'h' && Column + Ship.Size > GridSize)
     {
       return false;
     }
@@ -155,9 +155,9 @@ class Program
 
   private static bool CheckWin(char[,] Board)
   {
-    for (int Row = 0; Row < 10; Row++)
+    for (int Row = 0; Row < GridSize; Row++)
     {
-      for (int Column = 0; Column < 10; Column++)
+      for (int Column = 0; Column < GridSize; Column++)
       {
         if (Board[Row, Column] == 'A' || Board[Row, Column] == 'B' || Board[Row, Column] == 'S' || Board[Row, Column] == 'D' || Board[Row, Column] == 'P')
         {
@@ -174,15 +174,15 @@ class Program
     Console.WriteLine("The board looks like this: ");
     Console.WriteLine();
     Console.Write(" ");
-    for (int Column = 0; Column < 10; Column++)
+    for (int Column = 0; Column < GridSize; Column++)
     {
       Console.Write(" " + Column + "  ");
     }
     Console.WriteLine();
-    for (int Row = 0; Row < 10; Row++)
+    for (int Row = 0; Row < GridSize; Row++)
     {
       Console.Write(Row + " ");
-      for (int Column = 0; Column < 10; Column++)
+      for (int Column = 0; Column < GridSize; Column++)
       {
         if (Board[Row, Column] == '-')
         {
@@ -257,7 +257,7 @@ class Program
   static void Main(string[] args)
   {
     ShipType[] Ships = new ShipType[5];
-    char[,] Board = new char[10, 10];
+    char[,] Board = new char[GridSize, GridSize];
     int MenuOption = 0;
     while (MenuOption != 9)
     {
