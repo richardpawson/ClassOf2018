@@ -66,7 +66,8 @@ namespace InMemoryStudentRecords
                 Console.WriteLine("3. Find by first name");
                 Console.WriteLine("4. Find by last name");
                 Console.WriteLine("5. Find by Grade");
-                Console.WriteLine("6. Find by Date Of Birth");
+                Console.WriteLine("6. Find Students by age");
+                Console.WriteLine("7. Find today's birthday students");
                 Console.WriteLine("0. Back to Main Menu");
                 Console.WriteLine("Enter selection:");
                 menuOption = Console.ReadLine();
@@ -88,7 +89,10 @@ namespace InMemoryStudentRecords
                         FindByGrade(students);
                         break;
                     case "6":
-                        FindByDateOfBirth(students);
+                        FindStudentsByAge(students);
+                        break;
+                    case "7":
+                        FindBirthdayStudents(students);
                         break;
                     case "0":
                         return; //To Main method & hence main menu
@@ -132,7 +136,16 @@ namespace InMemoryStudentRecords
             Console.WriteLine("Please Enter ID:");
             string option = Console.ReadLine();
             int optionint = Convert.ToInt32(option);
-            Console.WriteLine(students.First(r => r.Id == optionint).ConvertToString());
+            var student = students.First(r => r.Id == optionint);
+            Console.WriteLine("Please confirm date of birth for student:");
+            DateTime offeredDoB = Convert.ToDateTime(Console.ReadLine());
+            if (student.ConfirmDateOfBirthIs(offeredDoB))
+            {
+                Console.WriteLine(student.ConvertToString());
+            } else
+            {
+                Console.WriteLine("Date of Birth entered did not match that of the requested student");
+            }
         }
 
         private static void FindByFirstName(List<Student> students)
@@ -140,12 +153,7 @@ namespace InMemoryStudentRecords
             Console.WriteLine("Please enter first name:");
             string option = Console.ReadLine();
             var results = students.Where(r => r.FirstName.Trim().Contains(option));
-            foreach (var student in results)
-            {
-                Console.WriteLine(student);
-            }
-
-
+            WriteResultsToConsole(results);
         }
 
         private static void FindByLastName(List<Student> students)
@@ -153,11 +161,7 @@ namespace InMemoryStudentRecords
             Console.WriteLine("please enter their surname");
             string option = Console.ReadLine();
             var results = students.Where(r => r.LastName.Trim().Contains(option));
-            foreach (var student in results)
-            {
-                Console.WriteLine(student.ConvertToString());
-            }
-
+            WriteResultsToConsole(results);
         }
 
         private static void FindByGrade(List<Student> students)
@@ -167,16 +171,31 @@ namespace InMemoryStudentRecords
             string grade = Console.ReadLine();
             char gradechar = Convert.ToChar(grade);
             var results = (students.Where(r => r.Grade == gradechar));
+            WriteResultsToConsole(results);
+        }
+
+        private static void FindStudentsByAge(List<Student> students)
+        {
+            Console.WriteLine("Please enter required age");
+            string input = Console.ReadLine();
+            int age = Convert.ToInt32(input);
+            var results = (students.Where(r => r.IsOverAged(age)));
+            WriteResultsToConsole(results);
+        }
+
+        private static void FindBirthdayStudents(List<Student> students)
+        {
+            var results = (students.Where(r => r.IsBirthdayToday()));
+            WriteResultsToConsole(results);
+        }
+        private static void WriteResultsToConsole(IEnumerable<Student> results)
+        {
             foreach (var student in results)
             {
                 Console.WriteLine(student.ConvertToString());
             }
         }
 
-        private static void FindByDateOfBirth(List<Student> students)
-        {
-            throw new NotImplementedException();
-        }
         #endregion
         #region Helper methods for Tuples
         private static Student ConvertStringToStudent(string s)

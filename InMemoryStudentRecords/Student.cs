@@ -11,11 +11,14 @@ namespace InMemoryStudentRecords
             LastName = last;
             DateOfBirth = dob;
         }
+
+        #region Properties
         public int Id { get; private set; }
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
-        public DateTime DateOfBirth { get; private set; }
+        private DateTime DateOfBirth { get;  set; }
         public char Grade { get; set; }
+        #endregion
 
         public string ConvertToString()
         {
@@ -26,6 +29,22 @@ namespace InMemoryStudentRecords
         {
             throw new NotImplementedException();
         }
+
+        public bool IsOverAged(int requiredAge) {
+            var today = DateTime.Today;
+            var age = today.Year - DateOfBirth.Year;
+            if (DateOfBirth > today.AddYears(-age)) age--;
+            return age >= requiredAge;
+        }
+
+        public bool ConfirmDateOfBirthIs(DateTime claimedDoB) {
+            return claimedDoB == DateOfBirth;
+        }
+
+        public bool IsBirthdayToday() {
+            return DateTime.Today.Day == DateOfBirth.Day && DateTime.Today.Month == DateOfBirth.Month;
+        }
+
 
     }
 }
