@@ -10,19 +10,13 @@ namespace InMemoryStudentRecords
         static void Main()
         {
             List<Tuple<int, string, string, DateTime, char>> records = new List<Tuple<int, string, string, DateTime, char>>();
+            LoadStudents(records, "StudentRecords.csv");
             string menuOption = "";
             while (menuOption != "0")
             {
                 Console.WriteLine("Main Menu");
                 Console.WriteLine("1. Create new student record");
-                Console.WriteLine("2. Read student record");
-                Console.WriteLine("3. Update student record");
-                Console.WriteLine("4. Delete student record");
-                Console.WriteLine("5. Find student records");
-                Console.WriteLine("6. Load Data File");
-                Console.WriteLine("7. Back-up Data File");
-                Console.WriteLine("8. Write Data File");
-                Console.WriteLine("0. Quit");
+                Console.WriteLine("2. Find student records");
                 Console.WriteLine("Enter selection:");
                 menuOption = Console.ReadLine();
                 switch (menuOption)
@@ -31,25 +25,7 @@ namespace InMemoryStudentRecords
                         CreateNewStudentRecord(records);
                         break;
                     case "2":
-                        ReadStudentRecord(records);
-                        break;
-                    case "3":
-                        UpdateStudentRecord(records);
-                        break;
-                    case "4":
-                        DeleteStudentRecord(records);
-                        break;
-                    case "5":
                         FindStudents(records);
-                        break;
-                    case "6":
-                        LoadDataFile(records);
-                        break;
-                    case "7":
-                        WriteDataFile(records);
-                        break;
-                    case "8":
-                        WriteDataFile(records);
                         break;
                     default:
                         Console.WriteLine("Selection not valid.");
@@ -76,16 +52,6 @@ namespace InMemoryStudentRecords
             int optionint = Convert.ToInt32(option);
             var record = records.First(r => r.Item1 == optionint);
             Console.WriteLine(ConvertTupleToString(record));
-        }
-
-        private static void UpdateStudentRecord(List<Tuple<int, string, string, DateTime, char>> records)
-        {
-            throw new NotImplementedException();
-        }
-
-        private static void DeleteStudentRecord(List<Tuple<int, string, string, DateTime, char>> records)
-        {
-            throw new NotImplementedException();
         }
 
         static void FindStudents(List<Tuple<int, string, string, DateTime, char>> records)
@@ -131,28 +97,9 @@ namespace InMemoryStudentRecords
             }
         }
 
-        static void LoadDataFile(List<Tuple<int, string, string, DateTime, char>> records)
+        static void LoadStudents(List<Tuple<int, string, string, DateTime, char>> records, string fileName)
         {
-            string input = "";
-            bool success = false;
-            do
-            {
-                try
-                {
-                    Console.WriteLine("enter the file name .csv");
-                    input = Console.ReadLine();
-                    using (StreamReader reader = new StreamReader(input))
-                    {
-                    }
-                    success = true;
-                }
-
-                catch (FileNotFoundException)
-                {
-                    Console.WriteLine("not a valid file name");
-                }
-            } while (success == false);
-            using (StreamReader reader = new StreamReader(input))
+            using (StreamReader reader = new StreamReader(fileName))
             {
                 while (!reader.EndOfStream)
                 {
@@ -171,20 +118,6 @@ namespace InMemoryStudentRecords
                 }
             }
             Console.WriteLine("done");
-        }
-        static void WriteDataFile(List<Tuple<int, string, string, DateTime, char>> records)
-        {
-            Console.WriteLine("Please name the output file:");
-            string outputFileName = Console.ReadLine();
-            using (StreamWriter writer = new StreamWriter(outputFileName + ".csv"))
-            {
-                for (int i = 0; i < records.Count; i++)
-                {
-                    var line = ConvertTupleToString(records[i]);
-                    writer.WriteLine(line);
-                }
-                writer.Flush();
-            }
         }
 
         #region Find sub-menu actions
