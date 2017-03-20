@@ -2,7 +2,8 @@
   "appPath": "http://localhost:5000/rest",
   "colors": {
     "typeMap": {
-      "Template.Model.Student": 1
+      "Template.Model.Student": 1,
+      "Template.Model.Teacher": 2
     }
   },
   "masks": {

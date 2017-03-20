@@ -16,7 +16,6 @@ using Template.DataBase;
 namespace NakedObjects.Template {
     public class NakedObjectsRunSettings
     {
-
         public static string RestRoot
         {
             get { return "rest"; }
@@ -47,7 +46,8 @@ namespace NakedObjects.Template {
             get
             {
                 return new Type[] {
-                    typeof(ExampleService)
+                    typeof(StudentRepository),
+                    typeof(TeacherRepository)
                 };
             }
         }
@@ -67,7 +67,8 @@ namespace NakedObjects.Template {
         public static IMenu[] MainMenus(IMenuFactory factory)
         {
             return new IMenu[] {
-                factory.NewMenu<ExampleService>(true, "Menu")
+                factory.NewMenu<StudentRepository>(true, "Students"),
+                factory.NewMenu<TeacherRepository>(true, "Teachers")
             };
         }
     }
