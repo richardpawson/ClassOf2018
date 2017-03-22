@@ -12,13 +12,6 @@ namespace Template.DataBase
         protected override void Seed(ExampleDbContext context)
         {
             this.Context = context;
-            AddNewStudent("Alie Algol", "21/03/2001");
-            AddNewStudent("Forrest Fortran", "17/08/2001");
-            AddNewStudent("James Java", "29/11/2000");
-            AddNewStudent("Bas Basic", "25/12/2001");
-            AddNewStudent("Dylan Dylan", "15/1/2000");
-            AddNewStudent("Penny Python", "14/2/2001");
-            AddNewStudent("Samantha Smalltalk", "20/9/2001");
 
             AddNewTeacher("David Dell", "Computer Science");
             AddNewTeacher("Andy Apple", "Computer Science");
@@ -28,12 +21,24 @@ namespace Template.DataBase
             AddNewTeacher("Yolanda Ypres", "History");
             AddNewTeacher("Travis Trafalgar", "History");
             AddNewTeacher("Gwen Gondwanaland", "Geography");
+
+            context.SaveChanges();
+
+            AddNewStudent("Alie Algol", "21/03/2001", 1);
+            AddNewStudent("Forrest Fortran", "17/08/2001",1);
+            AddNewStudent("James Java", "29/11/2000",2);
+            AddNewStudent("Bas Basic", "25/12/2001",4);
+            AddNewStudent("Dylan Dylan", "15/1/2000",6);
+            AddNewStudent("Penny Python", "14/2/2001",4);
+            AddNewStudent("Samantha Smalltalk", "20/9/2001", 3);
+
+
         }
 
-        private void AddNewStudent(string name, string dob)
+        private void AddNewStudent(string name, string dob, int tutorId)
         {
             var dobDate = Convert.ToDateTime(dob);
-            var st = new Student() { FullName = name, DateOfBirth = dobDate };
+            var st = new Student() { FullName = name, DateOfBirth = dobDate, TutorID = tutorId};
             Context.Students.Add(st);
         }
 

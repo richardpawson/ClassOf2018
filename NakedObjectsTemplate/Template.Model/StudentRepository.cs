@@ -32,6 +32,9 @@ namespace Template.Model
             //Filters students to find a match
             return AllStudents().Where(c => c.FullName.ToUpper().Contains(name.ToUpper()));
         }
+
+
+
     }
 
 }
