@@ -2,11 +2,14 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-*/bin
-*/obj
-*.suo
+**/bin
+**/obj
+**.suo
 Bombardment/Bombardment.sln
 Bombardment/Code.cs
 Bombardment/Code.cs
 Bombardment/Code.cs
 Bombardment2.sln
+**/packages
+**/nakedobjects_log*.*
+
