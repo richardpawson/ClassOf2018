@@ -25,7 +25,10 @@ namespace FilmRentals.Model
             var today = DateTime.Today;
             return this.Container.Instances<Rental>().Where(r => r.DateBack < today);
         }
-
+        public String SendOverdueFilmReminder()
+        {
+            return null;
+        }
     }
 
 }
