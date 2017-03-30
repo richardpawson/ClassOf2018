@@ -19,6 +19,11 @@ namespace FilmRentals.Model
         [MemberOrder(2)]
         public virtual string Address { get; set; }
 
+        [MemberOrder(3)]
+        public virtual int Age { get; set; }
+
+        [MemberOrder(4)]
+        public virtual string Email { get; set; }
         #region Rentals (collection)
         private ICollection<Rental> _Rentals = new List<Rental>();
 

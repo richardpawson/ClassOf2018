@@ -9,8 +9,8 @@ namespace FilmRentals.Data
         public static void CreateData(FilmRentalsDbContext dbContext)
         {
 
-            CreateMember(dbContext, "Toby Lawrance", "26 The Street, Silverstone");
-            CreateMember(dbContext, "Olly Clarke", "26 The Street, Oxford");
+            CreateMember(dbContext, "Toby Lawrance", "26 The Street, Silverstone", 87, "TLawrance@stowe.co.uk");
+            CreateMember(dbContext, "Olly Clarke", "26 The Street, Oxford", 18, "OllyC@aol.com");
             var u = CreateRating(dbContext, "U", 1);
             var pg = CreateRating(dbContext, "PG", 13);
             var r = CreateRating(dbContext, "R", 17);
@@ -19,12 +19,14 @@ namespace FilmRentals.Data
             CreateFilm(dbContext, "Mary Poppins", PriceCodes.Childrens, u);
         }
 
-        public static Member CreateMember(FilmRentalsDbContext context, string name, string address)
+        public static Member CreateMember(FilmRentalsDbContext context, string name, string address, int age, string email)
         {
             var member = new Member
             {
                 Name = name,
-                Address = address
+                Address = address,
+                Age = age,
+                Email = email
             };
             if (context != null)
             {
